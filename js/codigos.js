@@ -32,29 +32,73 @@ class Cilindro{
     return this.diametro;
   }
   setDiametro(diametro){
-    this.diametro = diametro;
-    return this.diametro;
+    if (diametro>0){
+      this.diametro = diametro;
+      this.error =" ";
+    }
+    else {
+      return this.error ="Ingrese un número positivo";
+    }
   }
   getAlturaCilindro(){
     return this.alturaCilindro;
   }
   setAlturaCilindro(alturaCilindro){
-    this.alturaCilindro = alturaCilindro;
-    return this.alturaCilindro;
+    if(alturaCilindro>0){
+      this.alturaCilindro = alturaCilindro;
+      this.error =" ";
+    }
+    else {
+      return this.error ="Ingrese un número positivo";
+    }
   }
   getAlturaAgua(){
     return this.alturaAgua;
   }
   setAlturaAgua(alturaAgua){
-    this.alturaAgua = alturaAgua;
-    return this.alturaAgua;
+    if(alturaAgua>0){
+      if(this.posicion=="vertical"){
+        if(alturaAgua<=this.alturaCilindro){
+          this.alturaAgua = alturaAgua;
+          this.error =" ";
+        }
+        else{
+          this.error ="El contenedor tiene más agua de la posible";
+        }
+      }
+      else{
+        if(alturaAgua<=this.diametro){
+          this.alturaAgua = alturaAgua;
+          this.error =" ";
+        }
+        else{
+          this.error ="El contenedor tiene más agua de la posible";
+        }
+      }
+    }
   }
   getPosicion(){
     return this.posicion;
   }
   setPosicion(posicion){
-    this.posicion = posicion;
-    return this.posicion;
+    if(posicion=="vertical"){
+      if(this.alturaAgua<=this.alturaCilindro){
+        this.posicion = posicion;
+        this.error =" ";
+      }
+      else{
+        this.error ="El contenedor tiene más agua de la posible";
+      }
+    }
+    else{
+      if(this.alturaAgua<=this.diametro){
+        this.posicion = posicion;
+        this.error =" ";
+      }
+      else{
+        this.error ="El contenedor tiene más agua de la posible";
+      }
+    }
   }
   areaCirculo(){
     return Math.PI* Math.pow((this.diametro/2),2);
@@ -87,47 +131,70 @@ function calcular(){
   cilindro = new Cilindro(parseFloat(diametro.value),parseFloat(alturaCilindro.value),parseFloat(alturaAgua.value),posicion.value);
   if (cilindro.error){
     salidaLitros.textContent = cilindro.error;
+    let ocultos = document.getElementsByClassName("shadow"),
+    article = document.getElementById("alerta");
+    for (var i=0; i<ocultos.length; i++){
+      ocultos[i].removeAttribute("hidden");
+      }
+    article.className="message is-danger";
   }
   else{
+    let article = document.getElementById("alerta");
+    article.className="message is-dark";
     salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
-
     let ocultos = document.getElementsByClassName("shadow");
     for (var i=0; i<ocultos.length; i++){
       ocultos[i].removeAttribute("hidden");
     }
     alturaCilindro.addEventListener("input",function(){
         cilindro.setAlturaCilindro(alturaCilindro.value);
-        if (cilindro.error){
+        if (cilindro.error!==" "){
+          let article = document.getElementById("alerta");
+          article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          let article = document.getElementById("alerta");
+          article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
         }
     });
     diametro.addEventListener("input",function(){
         cilindro.setDiametro(diametro.value);
-        if (cilindro.error){
+        if (cilindro.error!==" "){
+          let article = document.getElementById("alerta");
+          article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          let article = document.getElementById("alerta");
+          article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
         }
     });
     alturaAgua.addEventListener("input",function(){
         cilindro.setAlturaAgua(alturaAgua.value);
-        if (cilindro.error){
+        if (cilindro.error!==" "){
+          let article = document.getElementById("alerta");
+          article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          let article = document.getElementById("alerta");
+          article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
         }
     });
     form.addEventListener("change",function(){
         cilindro.setPosicion(posicion.value);
-        if (cilindro.error){
+        if (cilindro.error!==" "){
+          let article = document.getElementById("alerta");
+          article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          let article = document.getElementById("alerta");
+          article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
         }
     });
@@ -161,11 +228,13 @@ function animate() {
 	renderer.render( scene, camera );
 }
 
-function divisor (objeto){
+function divisor(objeto){
   let diametro = objeto.getDiametro(),
-  altura = objeto.getAlturaCilindro(),
-  tamanoDiametro = diametro.toString().length,
-  tamanoAltura = altura.toString().length;
+  altura = objeto.getAlturaCilindro();
+  var diametroDot = diametro.toString().split("."),
+  alturaDot = altura.toString().split("."),
+  tamanoDiametro = diametroDot[0].toString().length,
+  tamanoAltura = alturaDot[0].toString().length;
   if(altura>=diametro){
    let limite = Math.pow(10,tamanoAltura-1);
    if (diametro==altura && diametro<=limite){
