@@ -238,10 +238,13 @@ function divisor(objeto){
   if(altura>=diametro){
    let limite = Math.pow(10,tamanoAltura-1);
    if (diametro==altura && diametro<=limite){
-     return limite*2
+     return limite*2;
    }
    else if(altura==limite){
      return limite;
+   }
+   else if(altura<limite*5){
+     return limite*5;
    }
    else{
      return limite*10;
@@ -251,6 +254,9 @@ function divisor(objeto){
    let limite = Math.pow(10,tamanoDiametro-1);
    if(diametro==limite){
      return limite;
+   }
+   else if(diametro<limite*5){
+     return limite*5;
    }
    else{
      return limite*10;
