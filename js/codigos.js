@@ -149,62 +149,74 @@ function calcular(){
     alturaCilindro.addEventListener("input",function(){
         cilindro.setAlturaCilindro(alturaCilindro.value);
         if (cilindro.error!==" "){
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
+
+          init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
+
         }
     });
     diametro.addEventListener("input",function(){
         cilindro.setDiametro(diametro.value);
         if (cilindro.error!==" "){
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
+          init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
         }
     });
     alturaAgua.addEventListener("input",function(){
         cilindro.setAlturaAgua(alturaAgua.value);
         if (cilindro.error!==" "){
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
+          init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
         }
     });
     form.addEventListener("change",function(){
         cilindro.setPosicion(posicion.value);
         if (cilindro.error!==" "){
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-danger";
           salidaLitros.textContent = cilindro.error;
         }
         else{
+          borrarCanvas();
           let article = document.getElementById("alerta");
           article.className="message is-dark";
           salidaLitros.textContent="El volumen en litros es: "+ cilindro.volumenAgua().toFixed(2);
+          init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
         }
     });
     document.getElementById("submit").setAttribute("disabled",false);
     var camera, scene, renderer;
     var geometry, material, mesh;
-    console.log(divisor(cilindro));
     init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
     animate();
-
   }
 }
 
@@ -262,5 +274,13 @@ function divisor(objeto){
    else{
      return limite*10;
    }
+  }
+}
+
+
+function borrarCanvas(){
+  var canvas = document.getElementsByTagName("canvas");
+  for (var index = 0; index < canvas.length; index++) {
+    canvas[index].parentNode.removeChild(canvas[index]);
   }
 }
