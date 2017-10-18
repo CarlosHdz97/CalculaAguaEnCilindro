@@ -225,7 +225,8 @@ function init(diametro,altura,divisor) {
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
 	camera.position.z = 1;
 	scene = new THREE.Scene();
-	geometry = new THREE.CylinderGeometry( (diametro/2)/divisor, (diametro/2)/divisor, altura/divisor,40,);
+  console.log((diametro/2)/divisor,(diametro/2)/divisor, altura/divisor);
+	geometry = new THREE.CylinderGeometry( (diametro/2)/divisor,(diametro/2)/divisor, altura/divisor,40,);
 	material = new THREE.MeshNormalMaterial();
 	mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
@@ -244,36 +245,11 @@ function animate() {
 function divisor(objeto){
   let diametro = objeto.getDiametro(),
   altura = objeto.getAlturaCilindro();
-  var diametroDot = diametro.toString().split("."),
-  alturaDot = altura.toString().split("."),
-  tamanoDiametro = diametroDot[0].toString().length,
-  tamanoAltura = alturaDot[0].toString().length;
-  if(altura>=diametro){
-   let limite = Math.pow(10,tamanoAltura-1);
-   if (diametro==altura && diametro<=limite){
-     return limite*2;
-   }
-   else if(altura==limite){
-     return limite;
-   }
-   else if(altura<limite*5){
-     return limite*5;
-   }
-   else{
-     return limite*10;
-   }
+  if(diametro>=altura){
+    return diametro*2;
   }
   else{
-   let limite = Math.pow(10,tamanoDiametro-1);
-   if(diametro==limite){
-     return limite;
-   }
-   else if(diametro<limite*5){
-     return limite*5;
-   }
-   else{
-     return limite*10;
-   }
+    return altura*2;
   }
 }
 
