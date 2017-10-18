@@ -201,6 +201,7 @@ function calcular(){
     document.getElementById("submit").setAttribute("disabled",false);
     var camera, scene, renderer;
     var geometry, material, mesh;
+    console.log(divisor(cilindro));
     init(cilindro.getDiametro(),cilindro.getAlturaCilindro(),divisor(cilindro));
     animate();
 
